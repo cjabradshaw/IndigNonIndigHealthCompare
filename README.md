@@ -5,11 +5,11 @@ Identify and quantify disparity in health indices between Indigenous and non-Ind
 
 <br>
 <a href="https://futurechildhealth.org/sofia-garreffa/">Sofia Garreffa</a> <br>
-<a href="http://flinders.edu.au" target="_blank">University of Western Australia</a>, Perth, Australia <br>
+University of Western Australia, Perth, Australia <br>
 <a href=mailto:23824941@student.uwa.edu.au>e-mail</a> <br>
 <br>
 Dr <a href="https://futurechildhealth.org/team/dr-melinda-a-judge/">Melinda A. Judge</a> <br>
-<a href="http://globalecologyflinders.com" target="_blank">The Kids Research Institute Australia</a> & <a href="http://flinders.edu.au" target="_blank">University of Western Australia</a>, Perth, Australia <br>
+The Kids Research Institute Australia & University of Western Australia, Perth, Australia <br>
 <a href=mailto:melinda.judge@thekids.org.au>e-mail</a> <br>
 <br>
 Prof <a href="https://globalecologyflinders.com/people/#DIRECTOR">Corey J. A. Bradshaw</a> <br>
