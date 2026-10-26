@@ -1,5 +1,5 @@
 # Indigenous vs. non-Indigenous child health outcomes
-<img align="right" src="www/pop.png" alt="population icon" width="180" style="margin-top: 20px">
+<img align="right" src="www/handscolour.png" alt="population icon" width="180" style="margin-top: 20px">
 
 Identify and quantify disparity in health indices between Indigenous and non-Indigenous children from conception to 5 years of age
 
