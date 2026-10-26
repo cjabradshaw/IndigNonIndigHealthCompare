@@ -9,8 +9,7 @@ library(countrycode)
 library(ggpubr)
 
 ## import data
-setwd("~/Documents/Students/Garreffa")
-dat <- read.csv("I_NI_outcomeOR3.csv")
+dat <- read.csv("data/I_NI_outcomeOR3.csv")
 head(dat)
 str(dat)
 
@@ -97,7 +96,7 @@ summXcntry <- dat %>%
 summXcntry
 
 ## output for QGIS joins for plotting
-cont_cntry <- read.csv("~/Documents/GitHub/InvaPactCountry/data/cont_cntry.csv", stringsAsFactors = FALSE)
+cont_cntry <- read.csv("data/cont_cntry.csv", stringsAsFactors = FALSE)
 iso_lookup <- codelist |>
   dplyr::select(country.name.en, iso2c, iso3c) |>
   dplyr::distinct() |>
