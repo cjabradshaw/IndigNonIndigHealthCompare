@@ -264,7 +264,7 @@ ORXyear_plot <- ggplot(
   scale_y_log10(breaks = breaks_major,
                 minor_breaks = breaks_minor) +
   labs(y = "odds ratio", x = "year") +
-  annotate("text", x = 1965, y = 300, label = "A", size = 15, colour = "black") +
+  annotate("text", x = 1970, y = 400, label = "A", size = 15, colour = "black") +
   theme(axis.text.x = element_text(size = 13),
         axis.text.y = element_text(size = 13),
         axis.title.x = element_text(size = 16),
@@ -272,19 +272,19 @@ ORXyear_plot <- ggplot(
 ORXyear_plot
 
 
-## calculate bootstrapped OR time series for RESPINF only (highest number of entries with OR > 1)
-RESPINF.dat <- subset(dat, outcome == "RESPINF")
-head(RESPINF.dat)
-dim(RESPINF.dat)
-range(RESPINF.dat$year)
+## calculate bootstrapped OR time series for SEVSTU only (enough entries with OR > 1)
+SEVSTU.dat <- subset(dat, outcome == "SEVSTU")
+head(SEVSTU.dat)
+dim(SEVSTU.dat)
+range(SEVSTU.dat$year)
 
-RESPINF.years_vec <- as.numeric(names(table(RESPINF.dat$year)))
-RESPINF.years_vec
+SEVSTU.years_vec <- as.numeric(names(table(SEVSTU.dat$year)))
+SEVSTU.years_vec
 boot_iter <- 1000
 
-RESPINF.year_OR_med <- RESPINF.year_OR_lo <- RESPINF.year_OR_up <- rep(NA, length(RESPINF.years_vec))
-for (y in 1:length(RESPINF.years_vec)) {
-  year_dat <- subset(RESPINF.dat, year == RESPINF.years_vec[y])
+SEVSTU.year_OR_med <- SEVSTU.year_OR_lo <- SEVSTU.year_OR_up <- rep(NA, length(SEVSTU.years_vec))
+for (y in 1:length(SEVSTU.years_vec)) {
+  year_dat <- subset(SEVSTU.dat, year == SEVSTU.years_vec[y])
   
   OR_boot_vec <- NA
   ## iterate fewer times for random study selection
@@ -316,27 +316,27 @@ for (y in 1:length(RESPINF.years_vec)) {
   } # end s loop
   OR_boot_vec <- OR_boot_vec[-1]
   
-  RESPINF.year_OR_med[y] <- median(OR_boot_vec, na.rm=T)
-  RESPINF.year_OR_lo[y] <- quantile(OR_boot_vec, probs=0.025, na.rm=T)
-  RESPINF.year_OR_up[y] <- quantile(OR_boot_vec, probs=0.975, na.rm=T)
-  print(paste("year = ", RESPINF.years_vec[y], "; % complete = ",
-              round(100*y/length(RESPINF.years_vec), 1), "%", sep=""))
+  SEVSTU.year_OR_med[y] <- median(OR_boot_vec, na.rm=T)
+  SEVSTU.year_OR_lo[y] <- quantile(OR_boot_vec, probs=0.025, na.rm=T)
+  SEVSTU.year_OR_up[y] <- quantile(OR_boot_vec, probs=0.975, na.rm=T)
+  print(paste("year = ", SEVSTU.years_vec[y], "; % complete = ",
+              round(100*y/length(SEVSTU.years_vec), 1), "%", sep=""))
   
 } # end y loop
 
-RESPINF.year_dat_boot <- data.frame("year" = RESPINF.years_vec,
-                            "ORmed" = RESPINF.year_OR_med,
-                            "ORup" = RESPINF.year_OR_up,
-                            "ORlo" = RESPINF.year_OR_lo)
-RESPINF.year_dat_boot
-head(RESPINF.year_dat_boot)
+SEVSTU.year_dat_boot <- data.frame("year" = SEVSTU.years_vec,
+                            "ORmed" = SEVSTU.year_OR_med,
+                            "ORup" = SEVSTU.year_OR_up,
+                            "ORlo" = SEVSTU.year_OR_lo)
+SEVSTU.year_dat_boot
+head(SEVSTU.year_dat_boot)
 
 ## plot
 breaks_major <- 10^(0:5)
 breaks_minor <- unlist(lapply(0:5, function(i) (2:9) * 10^i))
 
-RESPINF.ORXyear_plot <- ggplot(
-  RESPINF.year_dat_boot, 
+SEVSTU.ORXyear_plot <- ggplot(
+  SEVSTU.year_dat_boot, 
   aes(x = year)) +
   geom_line(aes(y = ORmed), linewidth=2, col = "black") +
   geom_point(aes(y = ORmed), size=4, col="darkred") +
@@ -346,11 +346,94 @@ RESPINF.ORXyear_plot <- ggplot(
   ) +
   scale_y_log10(breaks = breaks_major, minor_breaks = breaks_minor) +
   labs(y = "odds ratio", x = "year") +
-  annotate("text", x = 1995, y = 40, label = "B", size = 15, colour = "black") +
+  annotate("text", x = 1993, y = 2400, label = "B", size = 15, colour = "black") +
   theme(axis.text.x = element_text(size = 13),
         axis.text.y = element_text(size = 13),
         axis.title.x = element_text(size = 16),
         axis.title.y = element_blank())
-RESPINF.ORXyear_plot
+SEVSTU.ORXyear_plot
 
-ggarrange(ORXyear_plot, RESPINF.ORXyear_plot, ncol=2, nrow=1)
+
+## calculate bootstrapped OR time series for MODSTU only (enough entries with OR > 1)
+MODSTU.dat <- subset(dat, outcome == "MODSTU")
+head(MODSTU.dat)
+dim(MODSTU.dat)
+range(MODSTU.dat$year)
+
+MODSTU.years_vec <- as.numeric(names(table(MODSTU.dat$year)))
+MODSTU.years_vec
+boot_iter <- 1000
+
+MODSTU.year_OR_med <- MODSTU.year_OR_lo <- MODSTU.year_OR_up <- rep(NA, length(MODSTU.years_vec))
+for (y in 1:length(MODSTU.years_vec)) {
+  year_dat <- subset(MODSTU.dat, year == MODSTU.years_vec[y])
+  
+  OR_boot_vec <- NA
+  ## iterate fewer times for random study selection
+  for (s in 1:round(boot_iter/10, 0)) {
+    
+    ## only take 1 value from the same study (at random) per outcome iteration
+    stud_unique <- unique(year_dat$STUD)
+    stud_dat_unique <- year_dat[1,]
+    for (s in 1:length(stud_unique)) {
+      stud_dat <- subset(year_dat, STUD == stud_unique[s])
+      lstud_dat <- dim(stud_dat)[1]
+      if (lstud_dat > 1) {
+        entry_singl_stud <- stud_dat[sample(1:lstud_dat)[1],]
+      }
+      if (lstud_dat == 1) {
+        entry_singl_stud <- stud_dat
+      }
+      stud_dat_unique <- rbind(stud_dat_unique, entry_singl_stud)
+    }
+    stud_dat_unique <- stud_dat_unique[-1,]
+    
+    for (i in 1:dim(stud_dat_unique)[1]) {
+      mu <- log(stud_dat_unique[i,]$OR) # log odds
+      SE <- stud_dat_unique[i,]$ORSE # log odds SE
+      OR_boot <- exp(rnorm(boot_iter, mean = mu, sd = SE)) # Gaussian resample and back-transform
+      OR_boot_vec <- c(OR_boot_vec, OR_boot)
+    } # end i loop
+    
+  } # end s loop
+  OR_boot_vec <- OR_boot_vec[-1]
+  
+  MODSTU.year_OR_med[y] <- median(OR_boot_vec, na.rm=T)
+  MODSTU.year_OR_lo[y] <- quantile(OR_boot_vec, probs=0.025, na.rm=T)
+  MODSTU.year_OR_up[y] <- quantile(OR_boot_vec, probs=0.975, na.rm=T)
+  print(paste("year = ", MODSTU.years_vec[y], "; % complete = ",
+              round(100*y/length(MODSTU.years_vec), 1), "%", sep=""))
+  
+} # end y loop
+
+MODSTU.year_dat_boot <- data.frame("year" = MODSTU.years_vec,
+                                   "ORmed" = MODSTU.year_OR_med,
+                                   "ORup" = MODSTU.year_OR_up,
+                                   "ORlo" = MODSTU.year_OR_lo)
+MODSTU.year_dat_boot
+head(MODSTU.year_dat_boot)
+
+## plot
+breaks_major <- 10^(0:5)
+breaks_minor <- unlist(lapply(0:5, function(i) (2:9) * 10^i))
+
+MODSTU.ORXyear_plot <- ggplot(
+  MODSTU.year_dat_boot, 
+  aes(x = year)) +
+  geom_line(aes(y = ORmed), linewidth=2, col = "black") +
+  geom_point(aes(y = ORmed), size=4, col="darkred") +
+  geom_errorbar(
+    aes(ymin = ORlo, ymax = ORup),
+    width = 0.3, linewidth = 0.3, col="grey40"
+  ) +
+  scale_y_log10(breaks = breaks_major, minor_breaks = breaks_minor) +
+  labs(y = "odds ratio", x = "year") +
+  annotate("text", x = 1992, y = 490, label = "C", size = 15, colour = "black") +
+  theme(axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(size = 13),
+        axis.title.x = element_text(size = 16),
+        axis.title.y = element_blank())
+MODSTU.ORXyear_plot
+
+## plot 3 outcomes together
+ggarrange(ORXyear_plot, SEVSTU.ORXyear_plot, MODSTU.ORXyear_plot, ncol=3, nrow=1)
