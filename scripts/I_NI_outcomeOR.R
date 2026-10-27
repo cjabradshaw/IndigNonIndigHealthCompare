@@ -29,7 +29,7 @@ for (o in 1:length(outcomes_vec)) {
     ## only take 1 value from the same study (at random) per outcome iteration
     stud_unique <- unique(outcome_dat$STUD)
     stud_dat_unique <- outcome_dat[1,]
-    for (s in 1:length(stud.unique)) {
+    for (s in 1:length(stud_unique)) {
       stud_dat <- subset(outcome_dat, STUD == stud_unique[s])
       lstud_dat <- dim(stud_dat)[1]
       if (lstud_dat > 1) {
@@ -210,7 +210,7 @@ for (y in 1:length(years_vec)) {
     ## only take 1 value from the same study (at random) per outcome iteration
     stud_unique <- unique(year_dat$STUD)
     stud_dat_unique <- year_dat[1,]
-    for (s in 1:length(stud.unique)) {
+    for (s in 1:length(stud_unique)) {
       stud_dat <- subset(year_dat, STUD == stud_unique[s])
       lstud_dat <- dim(stud_dat)[1]
       if (lstud_dat > 1) {
@@ -293,7 +293,7 @@ for (y in 1:length(RESPINF.years_vec)) {
     ## only take 1 value from the same study (at random) per outcome iteration
     stud_unique <- unique(year_dat$STUD)
     stud_dat_unique <- year_dat[1,]
-    for (s in 1:length(stud.unique)) {
+    for (s in 1:length(stud_unique)) {
       stud_dat <- subset(year_dat, STUD == stud_unique[s])
       lstud_dat <- dim(stud_dat)[1]
       if (lstud_dat > 1) {
